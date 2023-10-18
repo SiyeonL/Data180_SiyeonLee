@@ -8,7 +8,7 @@ date: '`r format(Sys.Date(), "%B %d, %Y")`' # no need to change date since this 
 output: 
   html_document
 ---
-
+20/20. Good job
 Make sure that you have accepted the hw invitation link, and working with your clone repository.
 
 **Due date:** October 12 beginning of class.
@@ -87,8 +87,8 @@ ggplot(Cars93, aes(x=Origin, fill=AirBags)) + geom_bar(position='dodge') + labs(
 # Maps
 Load Australia's state map data via running:
 ```{r}
-install.packages('ozmaps')
-install.packages('sf')
+#install.packages('ozmaps')
+#install.packages('sf')
 # install the packages below by uncommenting the lines. You need to do this only once.
 #install.packages('ozmaps') # downloads the map needed
 #install.packages('sf') # package used to analyze spatial data
@@ -154,7 +154,7 @@ Lastly, let's display the same map using `mapview()`. Load the `mapview` package
 
 ```{r}
 #install.packages('mapview') # interactive display
-install.packages('mapview')
+#install.packages('mapview')
 library(mapview)
 ```
 Create an interactive map of Australia using `mapview()`
