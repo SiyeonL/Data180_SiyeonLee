@@ -2,7 +2,7 @@
 title: "HW 1"
 subtitle: "Data 180, Professor Kennedy"
 author: 
-  name: "Siyeon Lee"
+  name: "Siyeon Lee" 
   email: "leesi@dickinson.edu"
 date: '`r format(Sys.Date(), "%B %d, %Y")`'
 output: 
