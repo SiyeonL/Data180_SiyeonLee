@@ -8,7 +8,7 @@ date: '`r format(Sys.Date(), "%B %d, %Y")`'
 output: 
   html_document
 ---
-
+20/20. Good job. 
 ```{r global options, include = FALSE}
 knitr::opts_chunk$set(warning=FALSE, message=FALSE)
 ```
@@ -122,6 +122,8 @@ ggplot(as.data.frame(wgss), aes(x=1:8,y=wgss)) + geom_point(size=2) + geom_line(
 plot(c(1:8),wgss,type="b",pch=16,cex=1.4,ylim=c(0,150),xlab="Number of Groups", ylab="WGSS")
 #Elbow plot suggest 2 to 3 clusters.
 #Elbow plot shows the clusters by WGSS starting to slow down, which is hard to clearfy, where as Dendrogram shows clustering through nested hierarchy picture, which could be clearly identified how many clusters are there.
+
+# Good job. 
 ```
 
 
