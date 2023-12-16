@@ -1,0 +1,107 @@
+---
+title: "Data 180 Final Exam"
+author: "Siyeon Lee"
+date: "2023-12-15"
+output: word_document
+---
+```{R}
+library(dplyr)
+library(ggplot2)
+data <- read.csv('/Users/siyeonlee/Desktop/Data180_SiyeonLee/loan_default_data_set (1).csv')
+```
+## 1. Data wrangling:
+#### a. What is the dimension (shape) of the dataset? How many rows and columns does the data set have?
+- There are 21 columns(variables) and 20000 rows(objects) in the data set.
+
+#### b. Report the column names of the data set.
+- tot_balance, avg_bal_cards, credit_age, credit_age_good_account, credit_card_age, num_acc_30d_past_due_12_months, num_acc_30d_past_due_6_months, num_mortgage_currently_past_due, tot_amount_currently_past_due, num_inq_12_month, num_card_inq_24_month, num_card_12_month, num_auto_.36month, uti_open_card, pct_over_50_uti, uti_max_credit_line, pct_card_over_50_uti, ind_XYZ, rep_income, rep_education, Def_ind      
+
+#### c. Which types of data are there in the dataset? Numeric, categorical, ordinal?
+- "rep_education" is categorical data since the value is representing the qualitative value. The rest of the other variables are numeric since the value is representing the quantitative values.
+
+#### d. Which columns contain missing values and how much (what percent) of those columns are missing?
+```{R}
+summary(data)
+```
+- The variable pct_card_over_50_uti has 1958 missing values and have 9.79%, and rep_income has 1559 missing values and have 7.795%.
+
+#### e. How do you think we should deal with missing values?
+- do not use the rows that contain missing values
+
+#### f. With this data, would you fit a supervised or an unsupervised learning model? Why?
+- Supervised learning model. This is because in the description of the data, it said I am given historical data containing one response and 20 predictor variables from credit card accounts for a hypothetical bank XYZ. This shows that I have the response and predictor variables in this data. In supervised learning the observations are classified into predictor and response variable where unsupervise learning is not classified as it is. This means that it is supervised learning.
+
+#### g. For part 2 and 3 drop all rows of the data that contain missing values. Print the dimensions of the resulting data set that has no missing values.
+```{R}
+data <- na.omit(data)
+```
+- There are 21 columns(variables) and 16653 rows(objects) in the data set.
+
+## 2. Data summary statistics:
+#### a. Find the summary statistics of the data set. You can use the summary function from dplyr.
+```{R}
+summary(data)
+```
+
+#### b. Based on the mean, mode, and median, is “num_card_inq_24_month” bell shaped, left, right skewed? How about “tot_amount_currently_past_due”? “credit_age”?
+- "num_card_inq_24_month" is right skewed, "tot_amount_currently_past_due" is right skewed, "credit_age" is bell shaped.
+
+
+#### c. Plot a histogram of the variables in b above. Do the shapes of the histograms confirm the skewness you found in b?
+```{R}
+hist(data$num_card_inq_24_month, main = "Histogram Example", xlab = "Num Card inq 24 Month", ylab = "Frequency", col = "lightblue", border = "black")
+hist(data$tot_amount_currently_past_due, main = "Histogram Example", xlab = "Tot Amount Currently Past Due", ylab = "Frequency", col = "lightblue", border = "black")
+hist(data$credit_age, main = "Histogram Example", xlab = "Credit Age", ylab = "Frequency", col = "lightblue", border = "black")
+```
+- the shapes of the histograms confirm the skewness I found in b. The histogram of "num_card_inq_24_month" shows the right skewed and in b, the summary of the data set shows that the mean is greater than median. The histogram of "tot_amount_currently_past_due" shows the right skewed and in b, the summary of the data set shows that the mean is greater than median.The histogram of "credit_age" shows the bell shaped and in b, the summary of the data set shows that the mean is approximately equal to median.
+
+#### d. How would your convert the “rep_education” column into numerical data? Name two ways.
+```{r}
+data2 <- data
+data2$rep_education <- as.numeric(factor(data2$rep_education))
+```
+- To convert the categorical column to a factor, we can use the factor() function. Then, as.numeric() can be applied to obtain the numerical data.
+```{r}
+data3 <- data
+data3 <- cbind(data3, model.matrix(~ rep_education - 1, data = data3))
+```
+- To convert the categorical column to a binary representation, the model.matrix() function can be used. -1 which is in the formula deletes the intercept term, and cbind() is to combine the binary columns and the original data frame.
+
+## 3. Data Visualization:
+#### a. Plot a bar graph for the “Def_Ind” column and describe it.
+```{r}
+ggplot (data, aes(factor(x = Def_ind))) +
+  geom_bar(fill = "skyblue", color = "black") +
+  labs(title = "Bar Graph of Indicator of Default",
+       x = "Category of Indicator of Default",
+       y = "Count of Indicator of Default")
+```
+- In the x axis, it represents the category of Indicator of Default and the y axis represents the count of Indicator of Default. The variable "Def_ind" contains only two vaules, 0 and 1. The bar graph shows the two categories, one is 0 and one is 1. Since the variable "Def_Ind" contains less value of 1 than 0, the left bar represents value 0 and right bar represents value 1. The vaule 1 is representing accound defaulted and 0 is representing not defaulted.
+
+#### b. Plot a bar graph for the “rep_education" column and describe it.
+```{r}
+ggplot(data, aes(x = rep_education)) +
+  geom_bar(fill = "skyblue", color = "black") +
+  labs(title = "Bar Graph of Education Level",
+       x = "Types of Education Level",
+       y = "Count of Education Level")
+```
+- The variable "rep_education" contains only four vaules, college, graduate, high_school, and other. In the x axis, it represents the types of education level and the y axis represents the count of education level. It shows that the value of college is the highest, and then the value of high_school, then the value of graduate, and the value of other is the lowest.
+
+#### c. Plot a histogram of the “rep_income” variable.
+```{r}
+ggplot(data, aes(rep_income)) +
+  geom_histogram(bins = 14, fill = 'lightblue', color = 'blue') +
+  labs(x = 'Annual Income', y = 'Count of Applicant', title = 'Distribution of Annual Income') +
+  scale_x_continuous(labels = scales::comma)
+```
+
+#### d. Plot a boxplot of the “tot_balance” variable. Using the box plot report the five number summary of the variable? Are there any outliers for this variable?
+```{r}
+ggplot(data, aes(x = 1, y = tot_balance)) +
+  geom_boxplot(fill = 'lightblue', color = 'blue') +
+  labs(y = 'Total Available Balance', title = 'Boxplot of Total Available Balance') +
+  theme_minimal()
+```
+- Five number summary: min: 0, 1st Qu: 92142, Median: 107740, Mean: 107503, 3rd Qu.: 122932, Max.: 200000
+- Outliers: Yes, there are outliers for this variable.
