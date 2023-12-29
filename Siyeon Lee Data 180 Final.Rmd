@@ -4,10 +4,13 @@ author: "Siyeon Lee"
 date: "2023-12-15"
 output: word_document
 ---
+
+36/40. Good job. 
+
 ```{R}
 library(dplyr)
 library(ggplot2)
-data <- read.csv('/Users/siyeonlee/Desktop/Data180_SiyeonLee/loan_default_data_set (1).csv')
+data <- read.csv("C:/Users/rodge/OneDrive/Desktop/DATA 180 -Intoduction to Data Science/DATA-180-Introduction-to-Data-Science--Section-2/data/loan_default_data_set.csv")
 ```
 ## 1. Data wrangling:
 #### a. What is the dimension (shape) of the dataset? How many rows and columns does the data set have?
@@ -27,6 +30,7 @@ summary(data)
 
 #### e. How do you think we should deal with missing values?
 - do not use the rows that contain missing values
+# How would you not use the rows with missing values? (-2)
 
 #### f. With this data, would you fit a supervised or an unsupervised learning model? Why?
 - Supervised learning model. This is because in the description of the data, it said I am given historical data containing one response and 20 predictor variables from credit card accounts for a hypothetical bank XYZ. This shows that I have the response and predictor variables in this data. In supervised learning the observations are classified into predictor and response variable where unsupervise learning is not classified as it is. This means that it is supervised learning.
@@ -61,6 +65,8 @@ data2 <- data
 data2$rep_education <- as.numeric(factor(data2$rep_education))
 ```
 - To convert the categorical column to a factor, we can use the factor() function. Then, as.numeric() can be applied to obtain the numerical data.
+
+# What would be the output of those functions (-2)
 ```{r}
 data3 <- data
 data3 <- cbind(data3, model.matrix(~ rep_education - 1, data = data3))
